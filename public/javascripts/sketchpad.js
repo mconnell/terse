@@ -128,3 +128,10 @@ Sketchpad.rx.draw = function(obj){
   Sketchpad.history.push(shape)
   return shape
 }
+
+
+//////////////////////////////////
+
+jQuery(document).ready(function(){
+  Sketchpad.initialise();
+});

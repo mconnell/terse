@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Terse</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag 'jquery', 'raphael', 'sketchpad', 'pusher' %>
+
+  <script type="text/javascript">
+  // Create a Pusher server object with your app's key
+  var server = new Pusher('e3c543914a4de3990f5a', 'things');
+
+  // Bind to server events
+  server.bind('push', function(obj){
+    Sketchpad.rx.draw(obj);
+  })
+  </script>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>

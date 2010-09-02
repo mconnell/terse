@@ -1,0 +1,25 @@
+#sketchpad #canvas{
+  border: 1px solid #DDD;
+  display: inline-block;
+  cursor: crosshair;
+}
+
+#sketchpad #toolbar{
+  float: left;
+  margin-right: 5px;
+}
+
+#sketchpad #toolbar .tool{
+  width:  40px;
+  height: 40px;
+  border: 1px solid #DDD;
+  margin-bottom: 5px;
+}
+
+#sketchpad #toolbar .tool:hover{
+  background-color: #eee;
+}
+
+#sketchpad #toolbar .tool.current{
+  background-color: #eee;
+}
