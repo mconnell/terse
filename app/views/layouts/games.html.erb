@@ -7,7 +7,7 @@
 
   <script type="text/javascript">
   // Create a Pusher server object with your app's key
-  var server = new Pusher('e3c543914a4de3990f5a', 'things');
+  var server = new Pusher('e3c543914a4de3990f5a', "private-game-<%=params[:id]%>");
 
   // Bind to server events
   server.bind('push', function(obj){
@@ -18,6 +18,13 @@
 <body>
 
 <%= yield %>
+
+
+<script>
+  jQuery(document).ready(function(){
+    Sketchpad.initialise('<%=params[:id]%>');
+  });
+</script>
 
 </body>
 </html>
