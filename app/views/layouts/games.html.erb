@@ -7,12 +7,26 @@
 
   <script type="text/javascript">
   // Create a Pusher server object with your app's key
-  var server = new Pusher('e3c543914a4de3990f5a', "private-game-<%=params[:id]%>");
+  var websocket = new Pusher('e3c543914a4de3990f5a');
+  var channel = websocket.subscribe("presence-game-<%=params[:id]%>")
 
   // Bind to server events
-  server.bind('push', function(obj){
+  channel.bind('push', function(obj){
     Sketchpad.rx.draw(obj);
   })
+
+  channel.bind('pusher:subscription_succeeded', function(member_list){
+    console.log('sub succeeded')
+    console.log('members: '+ member_list);
+  });
+
+  channel.bind('pusher:member_added', function(member){
+    console.log('added: '+ member)
+  });
+
+  channel.bind('pusher:member_removed', function(member){
+    console.log('removed: '+ member)
+  });
   </script>
 </head>
 <body>
