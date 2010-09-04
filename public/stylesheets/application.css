@@ -28,13 +28,22 @@ header{
 }
 
 header h1{
+  display: inline;
   margin: 0 0.2em;
   font-size: 1.8em;
+}
+
+header span{
+  color: #fff;
+  font-style: italic;
+  font-size: 0.8em;
+  text-shadow: -1px -1px 1px #222;
 }
 
 header h1 a{
   color: #fff;
   text-decoration: none;
+  text-shadow: -1px -1px 1px #222;
 }
 
 #sketchpad #canvas{
