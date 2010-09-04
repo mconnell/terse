@@ -1,7 +1,48 @@
+html, body{
+  background-color: #efefef;
+}
+
+body{
+  margin: 0;
+  font-size: 100%;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+header{
+  display:block;
+  margin: 0 auto 0.5em auto;
+  background-color: #284a69;
+  border-bottom: 2px solid #ccc;
+  background-image:-webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0.11, rgb(40,82,122)),
+      color-stop(0.5, rgb(40,74,105))
+  );
+  background-image:-moz-linear-gradient(
+      center bottom,
+      rgb(40,82,122) 11%,
+      rgb(40,74,105) 50%
+  );
+}
+
+header h1{
+  margin: 0 0.2em;
+  font-size: 1.8em;
+}
+
+header h1 a{
+  color: #fff;
+  text-decoration: none;
+}
+
 #sketchpad #canvas{
+  float:left;
   border: 1px solid #DDD;
   display: inline-block;
   cursor: crosshair;
+  background-color: #fff;
 }
 
 #sketchpad #toolbar{
@@ -14,6 +55,9 @@
   height: 40px;
   border: 1px solid #DDD;
   margin-bottom: 5px;
+  font-size: 1.5em;
+  text-align: center;
+  background-color: #fff;
 }
 
 #sketchpad #toolbar .tool:hover{
@@ -25,5 +69,6 @@
 }
 
 #scoreboard{
+  float: left;
   border: 1px solid #DDD;
 }
