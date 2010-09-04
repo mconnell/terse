@@ -16,17 +16,23 @@
   })
 
   channel.bind('pusher:subscription_succeeded', function(member_list){
-    console.log('sub succeeded')
-    console.log('members: '+ member_list);
+    jQuery('#scoreboard').empty();
+    jQuery.each(member_list, function(i, member){
+      addMember(member);
+    });
   });
 
   channel.bind('pusher:member_added', function(member){
-    console.log('added: '+ member)
+    addMember(member);
   });
 
   channel.bind('pusher:member_removed', function(member){
-    console.log('removed: '+ member)
+    jQuery('#player_'+member.user_id).remove();
   });
+
+  function addMember(member){
+    jQuery('#scoreboard').append(jQuery('<div id="player_'+ member.user_id +'">'+ member.user_id +'</div>'))
+  };
   </script>
 </head>
 <body>

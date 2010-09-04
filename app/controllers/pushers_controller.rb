@@ -2,7 +2,7 @@ class PushersController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def auth
-    response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {:user_id => Time.now.to_s})
+    response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {:user_id => Time.now.to_i})
     render :json => response
   end
 

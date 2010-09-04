@@ -23,3 +23,7 @@
 #sketchpad #toolbar .tool.current{
   background-color: #eee;
 }
+
+#scoreboard{
+  border: 1px solid #DDD;
+}
