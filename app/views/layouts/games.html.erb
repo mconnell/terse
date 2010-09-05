@@ -11,9 +11,11 @@
   var channel = websocket.subscribe("presence-game-<%=params[:id]%>")
 
   // Bind to server events
-  channel.bind('push', function(obj){
-    Sketchpad.rx.draw(obj);
-  })
+  websocket.bind('connection_established', function(evt){
+    jQuery.ajaxSetup({
+      data: { socket_id: evt.socket_id }
+    })
+  });
 
   channel.bind('pusher:subscription_succeeded', function(member_list){
     jQuery('#scoreboard').empty();
@@ -29,6 +31,10 @@
   channel.bind('pusher:member_removed', function(member){
     jQuery('#player_'+member.user_id).remove();
   });
+
+  channel.bind('push', function(obj){
+    Sketchpad.rx.draw(obj);
+  })
 
   function addMember(member){
     jQuery('#scoreboard').append(jQuery('<div id="player_'+ member.user_id +'">'+ member.user_id +'</div>'))
