@@ -80,4 +80,18 @@ header h1 a{
 #scoreboard{
   float: left;
   border: 1px solid #DDD;
+  height: 403px;
+  width: 200px;
+}
+
+#scoreboard header{
+  height: 30px;
+  background: none;
+  margin: 0;
+  border: 0;
+}
+
+#scoreboard #players .player{
+  height: 30px;
+  background-color: #fff;
 }

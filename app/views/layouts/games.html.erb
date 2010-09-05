@@ -18,7 +18,7 @@
   });
 
   channel.bind('pusher:subscription_succeeded', function(member_list){
-    jQuery('#scoreboard').empty();
+    jQuery('#players').empty();
     jQuery.each(member_list, function(i, member){
       addMember(member);
     });
@@ -37,7 +37,7 @@
   })
 
   function addMember(member){
-    jQuery('#scoreboard').append(jQuery('<div id="player_'+ member.user_id +'">'+ member.user_id +'</div>'))
+    jQuery('#players').append(jQuery('<div class="player" id="player_'+ member.user_id +'">'+ member.user_id +'</div>'))
   };
   </script>
 </head>
