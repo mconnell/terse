@@ -13,7 +13,7 @@
   // Bind to server events
   websocket.bind('connection_established', function(evt){
     jQuery.ajaxSetup({
-      data: { socket_id: evt.socket_id }
+      data: { socket_id: evt.socket_id, game_id: <%=params[:id]%> }
     })
   });
 
@@ -48,13 +48,6 @@
 </header>
 
 <%= yield %>
-
-
-<script>
-  jQuery(document).ready(function(){
-    Sketchpad.initialise('<%=params[:id]%>');
-  });
-</script>
 
 </body>
 </html>

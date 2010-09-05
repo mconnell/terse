@@ -1,8 +1,7 @@
 var Sketchpad = {};
 
 // Call this to setup the sketchpad
-Sketchpad.initialise = function(game_id){
-  Sketchpad.game_id = game_id
+Sketchpad.initialise = function(){
   Sketchpad.canvas  = Raphael('canvas', 600, 400);
   Sketchpad.history = [];
 
@@ -88,8 +87,7 @@ Sketchpad.applyMouseControls = function(){
       cy      : shape.attrs['cy'],
       rx      : shape.attrs['rx'],
       ry      : shape.attrs['ry'],
-      'path[]': shape.attrs['path'],
-      game_id : Sketchpad.game_id
+      'path[]': shape.attrs['path']
     }
 
     jQuery.post("/sketches", payload);
@@ -130,3 +128,9 @@ Sketchpad.rx.draw = function(obj){
   Sketchpad.history.push(shape)
   return shape
 }
+
+//////////////////////////////////
+
+jQuery(document).ready(function(){
+  Sketchpad.initialise();
+});
