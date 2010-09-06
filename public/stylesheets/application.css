@@ -112,5 +112,13 @@ header h1 a{
 }
 
 #submission{
+  margin-left: 47px;
   clear:both;
+  font-size: 1.2em;
+}
+
+#submission #guess{
+  width: 300px;
+  padding: 2px 5px;
+  font-size: 1.0em;
 }
