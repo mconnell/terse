@@ -34,7 +34,23 @@
 
   channel.bind('push', function(obj){
     Sketchpad.rx.draw(obj);
-  })
+  });
+
+  channel.bind('guess', function(obj){
+    jQuery('#guesses').append(jQuery('<div>'+obj.guess+'</div>'))
+  });
+
+
+  jQuery('#guess_form').live('submit', function() {
+    payload = {
+      guess: jQuery('#guess').val(),
+      user_id: <%= session[:user_id] %>
+    }
+    jQuery.post('/guesses', payload);
+
+    jQuery('#guess').val("");
+    return false;
+  });
 
   function addMember(member){
     jQuery('#players').append(jQuery('<div class="player" id="player_'+ member.user_id +'">'+ member.user_id +'</div>'))
@@ -44,10 +60,14 @@
 <body>
 
 <header>
-  <h1><%= link_to 'Terse', 'http://terse.co.uk' %></h1><span>- a game of few words.</span>
+  <div id="container">
+    <h1><%= link_to 'Terse', 'http://terse.co.uk' %></h1><span>- a game of few words.</span>
+  </div>
 </header>
 
-<%= yield %>
+<div id="container">
+  <%= yield %>
+</div>
 
 </body>
 </html>

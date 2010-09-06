@@ -46,6 +46,11 @@ header h1 a{
   text-shadow: -1px -1px 1px #222;
 }
 
+#container{
+  width: 960px;
+  margin: 0 auto;
+}
+
 #sketchpad #canvas{
   float:left;
   border: 1px solid #DDD;
@@ -80,8 +85,9 @@ header h1 a{
 #scoreboard{
   float: left;
   border: 1px solid #DDD;
-  height: 403px;
-  width: 200px;
+  height: 250px;
+  width: 300px;
+  margin-left: 5px;
 }
 
 #scoreboard header{
@@ -92,6 +98,19 @@ header h1 a{
 }
 
 #scoreboard #players .player{
-  height: 30px;
+  height: 25px;
   background-color: #fff;
+}
+
+#guesses{
+  margin-left: 5px;
+  float:left;
+  height: 150px;
+  width: 300px;
+  border: 1px solid #DDD;
+  overflow: scroll;
+}
+
+#submission{
+  clear:both;
 }
