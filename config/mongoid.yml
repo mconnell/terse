@@ -22,7 +22,10 @@ development:
 
 test:
   <<: *defaults
+  port: 27055
   database: terse_test
+  username: terse_test
+  password: terse_test
 
 # set these environment variables on your prod server
 production:
