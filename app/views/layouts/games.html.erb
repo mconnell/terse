@@ -22,7 +22,6 @@
           jQuery('#guesses').append(jQuery('<div>'+json[1].data+'</div>'));
           break;
         case 'draw':
-          console.log(json[1]);
           Sketchpad.rx.draw(json[1]);
           break;
       }
