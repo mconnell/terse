@@ -90,7 +90,7 @@ Sketchpad.applyMouseControls = function(){
       'path[]': shape.attrs['path']
     }
 
-    jQuery.post("/sketches", payload);
+    web_socket.trigger('draw', payload);
   });
 }
 

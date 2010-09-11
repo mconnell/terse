@@ -8,35 +8,50 @@
   <script type="text/javascript">
   jQuery(document).ready(function(){
     web_socket = new WebSocket("ws://localhost:8080/");
+
+    web_socket.trigger = function(event, data){
+      var payload = JSON.stringify([event, data]);
+      web_socket.send(payload);
+    };
+
     web_socket.onmessage = function(evt) {
       json = JSON.parse(evt.data);
 
-      switch(json.message_type){
+      switch(json[0]){
         case 'guess':
-          jQuery('#guesses').append(jQuery('<div>'+json.data+'</div>'))
+          jQuery('#guesses').append(jQuery('<div>'+json[1].data+'</div>'));
           break;
         case 'draw':
-        break;
+          console.log(json[1]);
+          Sketchpad.rx.draw(json[1]);
+          break;
       }
-
-      if(json.guess){
-        jQuery('#guesses').append(jQuery('<div>'+json.guess+'</div>'))
-      };
     };
+
     web_socket.onopen = function() {
-      web_socket.send(JSON.stringify({
-        lobby:        <%= params[:id] %>,
-        user_id:      <%= session[:user_id] %>,
-        message_type: 'connect'
-      }));
+      // web_socket.send(JSON.stringify({
+      //   lobby:        <%= params[:id] %>,
+      //   user_id:      <%= session[:user_id] %>,
+      //   message_type: 'connect'
+      // }));
     };
     web_socket.onclose = function() {
-      web_socket.send(JSON.stringify({
-        lobby:        <%= params[:id] %>,
-        user_id:      <%= session[:user_id] %>,
-        message_type: 'disconnect'
-      }));
+      // web_socket.send(JSON.stringify({
+      //   lobby:        <%= params[:id] %>,
+      //   user_id:      <%= session[:user_id] %>,
+      //   message_type: 'disconnect'
+      // }));
     };
+  });
+
+  jQuery('#guess_form').live('submit', function() {
+    var payload = {
+      data:    jQuery('#guess').val(),
+      user_id: <%= session[:user_id] %>
+    }
+    web_socket.trigger('guess', payload)
+    jQuery('#guess').val("");
+    return false;
   });
 
   // Create a Pusher server object with your app's key
@@ -69,21 +84,9 @@
   //   Sketchpad.rx.draw(obj);
   // });
 
-  jQuery('#guess_form').live('submit', function() {
-    payload = {
-      message_type: 'guess',
-      data:         jQuery('#guess').val(),
-      user_id:      <%= session[:user_id] %>
-    }
-    web_socket.send(JSON.stringify(payload))
-
-    jQuery('#guess').val("");
-    return false;
-  });
-
-  function addMember(member){
-    jQuery('#players').append(jQuery('<div class="player" id="player_'+ member.user_id +'">'+ member.user_id +'</div>'))
-  };
+  // function addMember(member){
+  //   jQuery('#players').append(jQuery('<div class="player" id="player_'+ member.user_id +'">'+ member.user_id +'</div>'))
+  // };
   </script>
 </head>
 <body>
