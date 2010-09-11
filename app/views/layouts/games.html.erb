@@ -3,50 +3,79 @@
 <head>
   <title>Terse</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag 'jquery', 'raphael', 'sketchpad', 'pusher' %>
+  <%= javascript_include_tag 'jquery', 'raphael', 'swfobject', 'FABridge', 'web_socket', 'sketchpad' %>
 
   <script type="text/javascript">
+  jQuery(document).ready(function(){
+    web_socket = new WebSocket("ws://localhost:8080/");
+    web_socket.onmessage = function(evt) {
+      json = JSON.parse(evt.data);
+
+      switch(json.message_type){
+        case 'guess':
+          jQuery('#guesses').append(jQuery('<div>'+json.data+'</div>'))
+          break;
+        case 'draw':
+        break;
+      }
+
+      if(json.guess){
+        jQuery('#guesses').append(jQuery('<div>'+json.guess+'</div>'))
+      };
+    };
+    web_socket.onopen = function() {
+      web_socket.send(JSON.stringify({
+        lobby:        <%= params[:id] %>,
+        user_id:      <%= session[:user_id] %>,
+        message_type: 'connect'
+      }));
+    };
+    web_socket.onclose = function() {
+      web_socket.send(JSON.stringify({
+        lobby:        <%= params[:id] %>,
+        user_id:      <%= session[:user_id] %>,
+        message_type: 'disconnect'
+      }));
+    };
+  });
+
   // Create a Pusher server object with your app's key
-  var websocket = new Pusher('e3c543914a4de3990f5a');
-  var channel = websocket.subscribe("presence-game-<%=params[:id]%>")
+  // var websocket = new Pusher('e3c543914a4de3990f5a');
+  // var channel = websocket.subscribe("presence-game-<%=params[:id]%>")
 
   // Bind to server events
-  websocket.bind('connection_established', function(evt){
-    jQuery.ajaxSetup({
-      data: { socket_id: evt.socket_id, game_id: <%=params[:id]%> }
-    })
-  });
+  // websocket.bind('connection_established', function(evt){
+  //   jQuery.ajaxSetup({
+  //     data: { socket_id: evt.socket_id, game_id: <%=params[:id]%> }
+  //   })
+  // });
 
-  channel.bind('pusher:subscription_succeeded', function(member_list){
-    jQuery('#players').empty();
-    jQuery.each(member_list, function(i, member){
-      addMember(member);
-    });
-  });
+  // channel.bind('pusher:subscription_succeeded', function(member_list){
+  //   jQuery('#players').empty();
+  //   jQuery.each(member_list, function(i, member){
+  //     addMember(member);
+  //   });
+  // });
 
-  channel.bind('pusher:member_added', function(member){
-    addMember(member);
-  });
-
-  channel.bind('pusher:member_removed', function(member){
-    jQuery('#player_'+member.user_id).remove();
-  });
-
-  channel.bind('push', function(obj){
-    Sketchpad.rx.draw(obj);
-  });
-
-  channel.bind('guess', function(obj){
-    jQuery('#guesses').append(jQuery('<div>'+obj.guess+'</div>'))
-  });
-
+  // channel.bind('pusher:member_added', function(member){
+  //   addMember(member);
+  // });
+  // 
+  // channel.bind('pusher:member_removed', function(member){
+  //   jQuery('#player_'+member.user_id).remove();
+  // });
+  // 
+  // channel.bind('push', function(obj){
+  //   Sketchpad.rx.draw(obj);
+  // });
 
   jQuery('#guess_form').live('submit', function() {
     payload = {
-      guess: jQuery('#guess').val(),
-      user_id: <%= session[:user_id] %>
+      message_type: 'guess',
+      data:         jQuery('#guess').val(),
+      user_id:      <%= session[:user_id] %>
     }
-    jQuery.post('/guesses', payload);
+    web_socket.send(JSON.stringify(payload))
 
     jQuery('#guess').val("");
     return false;
