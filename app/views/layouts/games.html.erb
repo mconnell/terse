@@ -7,7 +7,7 @@
 
   <script type="text/javascript">
   jQuery(document).ready(function(){
-    web_socket = new WebSocket("ws://localhost:8080/");
+    web_socket = new WebSocket("ws://localhost:8080/<%= params[:id] %>");
 
     web_socket.trigger = function(event, data){
       var payload = JSON.stringify([event, data]);
