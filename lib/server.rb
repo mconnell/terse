@@ -9,13 +9,14 @@ EventMachine.run do
         puts "#{socket_id} open"
 
         ws.onmessage do |msg|
-          json = JSON.parse msg
-          case json[0]
+          event, data = JSON.parse(msg)
+
+          case event
             when 'guess'
               @channel.push msg
             when 'draw'
-              json[1]['paths'] = json[1].delete('path[]').map{|path| path.split(',')} if json[1]['path[]']
-              @channel.push json.to_json
+              data['paths'] = data.delete('path[]').map{|path| path.split(',')} if data['path[]']
+              @channel.push [event, data].to_json
           end
         end
 
