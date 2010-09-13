@@ -42,3 +42,9 @@ EventMachine.run do
       end
   end
 end
+
+#
+# authenticate user on connection
+# Path: /hashed_user_id/lobby_id
+#
+# If no authentication, disconnect the client.
