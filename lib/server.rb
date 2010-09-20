@@ -1,45 +1,36 @@
 require File.join File.dirname(__FILE__), '../config/environment'
 
 EventMachine.run do
-  @channels = {}
-
-  def create_channel(channel_id)
-    @channels[channel_id] = EM::Channel.new
-
-    EventMachine::PeriodicTimer.new(65) do
-      puts "Clearing channel #{channel_id}"
-      @channels[channel_id].push ['clear', {}].to_json
-    end
-
-    @channels[channel_id]
-  end
+  @lobbies = {}
 
   EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8080) do |ws|
-      ws.onopen do
-        channel_id = ws.request['Path'].split('/').last
-        channel = @channels[channel_id] || create_channel(channel_id)
+    ws.onopen do
+      lobby_id = ws.request['Path'].split('/').last
+      lobby = @lobbies[lobby_id] || Lobby.new(lobby_id)
 
-        socket_id = channel.subscribe { |msg| ws.send msg }
-        puts "open: channel #{channel_id}, socket #{socket_id}"
+      socket_id = lobby.channel.subscribe { |msg| ws.send msg }
+      puts "open: channel #{lobby_id}, socket #{socket_id}"
 
-        ws.onmessage do |msg|
-          event, data = JSON.parse(msg)
+      # Receive Message
+      ws.onmessage do |msg|
+        event, data = JSON.parse(msg)
 
-          case event
-            when 'guess'
-              channel.push msg
-            when 'draw'
-              data['paths'] = data.delete('path[]').map{|path| path.split(',')} if data['path[]']
-              channel.push [event, data].to_json
-          end
+        case event
+          when 'guess'
+            lobby.channel.push msg
+          when 'draw'
+            data['paths'] = data.delete('path[]').map{|path| path.split(',')} if data['path[]']
+            lobby.channel.push [event, data].to_json
         end
-
-        ws.onclose do
-          channel.unsubscribe(socket_id)
-          puts "close: channel #{channel_id}, socket #{socket_id}"
-        end
-
       end
+
+      # Closing connection
+      # unsubscribe the user from the channel
+      ws.onclose do
+        lobby.channel.unsubscribe(socket_id)
+        puts "close: lobby #{lobby_id}, socket #{socket_id}"
+      end
+    end
   end
 end
 
