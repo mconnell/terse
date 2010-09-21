@@ -15,9 +15,14 @@ class Lobby
   def start_game
     EventMachine::PeriodicTimer.new(10) do
       puts "Clearing channel #{@id}"
-      @channel.push ['clear', {}].to_json
+      clear_client_sketchpads
       @game.finished? ? next_game : @game.next_round
       puts "Round #{@game.rounds.size}"
     end
+  end
+
+  private
+  def clear_client_sketchpads
+    @channel.push ['clear', {}].to_json
   end
 end
