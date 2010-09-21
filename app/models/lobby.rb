@@ -3,26 +3,30 @@ class Lobby
 
   def initialize(lobby_id)
     @channel = EM::Channel.new
-    @id = lobby_id
-    next_game
+    @id      = lobby_id
+    @game    = Game.new
     start_game
   end
 
-  def next_game
-    @game = Game.new
-  end
-
+  private
   def start_game
     EventMachine::PeriodicTimer.new(10) do
-      puts "Clearing channel #{@id}"
       clear_client_sketchpads
-      @game.finished? ? next_game : @game.next_round
-      puts "Round #{@game.rounds.size}"
+      start_next_round_or_game
     end
   end
 
-  private
   def clear_client_sketchpads
+    puts "Clearing channel #{@id}"
     @channel.push ['clear', {}].to_json
+  end
+
+  def start_next_round_or_game
+    if @game.finished?
+      @game = Game.new
+    else
+      @game.next_round
+    end
+    puts "Round #{@game.rounds.size}"
   end
 end
