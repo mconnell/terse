@@ -5,11 +5,11 @@ class Lobby
     @channel = EM::Channel.new
     @id      = lobby_id
     @game    = Game.new
-    start_game
+    start_lobby
   end
 
   private
-  def start_game
+  def start_lobby
     EventMachine::PeriodicTimer.new(10) do
       clear_client_sketchpads
       start_next_round_or_game
