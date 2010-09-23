@@ -82,6 +82,11 @@ header h1 a{
   background-color: #eee;
 }
 
+#sketchpad #toolbar .tool.disabled:hover,
+#sketchpad #toolbar .tool.disabled{
+  background-color: #fff;
+}
+
 #scoreboard{
   float: left;
   border: 1px solid #DDD;
@@ -108,7 +113,7 @@ header h1 a{
   height: 150px;
   width: 300px;
   border: 1px solid #DDD;
-  overflow: scroll;
+  overflow: auto;
 }
 
 #submission{

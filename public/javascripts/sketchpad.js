@@ -5,7 +5,7 @@ Sketchpad.initialise = function(){
   Sketchpad.canvas  = Raphael('canvas', 600, 400);
   Sketchpad.history = [];
 
-  Sketchpad.applyMouseControls();
+  Sketchpad.bindMouseControls();
   Sketchpad.useTool('freehand'); // default tool
 }
 
@@ -20,7 +20,7 @@ Sketchpad.currentTool = function(){
   return Sketchpad.tool;
 }
 
-Sketchpad.applyMouseControls = function(){
+Sketchpad.bindMouseControls = function(){
   var offset = jQuery('#canvas').offset();
   var start_x
   var start_y
@@ -94,6 +94,12 @@ Sketchpad.applyMouseControls = function(){
   });
 }
 
+Sketchpad.unbindMouseControls = function(){
+  jQuery('#canvas').unbind('mousedown');
+  jQuery('#canvas').unbind('mousemove');
+  jQuery('#canvas').unbind('mouseup');
+}
+
 Sketchpad.undo = function(){
   var shape = Sketchpad.history.pop();
   if(shape){ shape.remove() };
@@ -127,6 +133,20 @@ Sketchpad.rx.draw = function(obj){
 
   Sketchpad.history.push(shape)
   return shape
+}
+
+Sketchpad.rx.disableTools = function(){
+  Sketchpad.unbindMouseControls();
+  jQuery('#toolbar .tool').animate({'opacity': 0.2}, 1000);
+  jQuery('#toolbar .tool').addClass('disabled');
+  return true;
+}
+
+Sketchpad.rx.enableTools = function(){
+  Sketchpad.bindMouseControls();
+  jQuery('#toolbar .tool').animate({'opacity': 1}, 1000);
+  jQuery('#toolbar .tool').removeClass('disabled');
+  return true;
 }
 
 //////////////////////////////////
