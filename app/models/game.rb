@@ -7,6 +7,9 @@ class Game
 
   def next_round
     @rounds << Round.new
+    # select word
+    # select player
+    # notify_clients
   end
 
   def finished?
