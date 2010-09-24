@@ -19,7 +19,7 @@
 
       switch(json[0]){
         case 'guess':
-          jQuery('#guesses').append(jQuery('<div>'+json[1].data+'</div>'));
+          jQuery('#guesses').append(jQuery('<div>'+json[1].guess+'</div>'));
           break;
         case 'draw':
           Sketchpad.rx.draw(json[1]);
@@ -48,7 +48,7 @@
 
   jQuery('#guess_form').live('submit', function() {
     var payload = {
-      data:    jQuery('#guess').val(),
+      guess:    jQuery('#guess').val(),
       user_id: <%= session[:user_id] %>
     }
     web_socket.trigger('guess', payload)
