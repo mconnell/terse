@@ -106,7 +106,6 @@ Sketchpad.undo = function(){
   return false;
 };
 
-
 Sketchpad.rx = {}
 Sketchpad.rx.clear = function(){
   Sketchpad.canvas.clear();

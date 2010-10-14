@@ -21,7 +21,11 @@ EventMachine.run do
 
         case event
           when 'guess'
-            lobby.channel.push msg
+            if data['guess'] == lobby.game.word
+              ws.send msg
+            else
+              lobby.channel.push msg
+            end
           when 'draw'
             data['paths'] = data.delete('path[]').map{|path| path.split(',')} if data['path[]']
             lobby.channel.push [event, data].to_json

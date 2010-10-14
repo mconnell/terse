@@ -10,7 +10,7 @@ class Lobby
 
   private
   def start_lobby
-    EventMachine::PeriodicTimer.new(10) do
+    EventMachine::PeriodicTimer.new(30) do
       clear_client_sketchpads
       start_next_round_or_game
     end

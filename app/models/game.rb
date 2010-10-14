@@ -1,5 +1,5 @@
 class Game
-  attr_reader :rounds
+  attr_reader :rounds, :word
   def initialize
     @rounds = []
     next_round
@@ -8,6 +8,7 @@ class Game
   def next_round
     @rounds << Round.new
     # select word
+    @word = 'foobar'
     # select player
     # notify_clients
   end
