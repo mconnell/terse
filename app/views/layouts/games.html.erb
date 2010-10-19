@@ -93,6 +93,14 @@
 </head>
 <body>
 
+  <%- if notice.present? %>
+    <p class="notice"><%= notice %></p>
+  <%- end %>
+
+  <%- if alert.present? %>
+    <p class="alert"><%= alert %></p>
+  <%- end %>
+
 <header>
   <div id="container">
     <h1><%= link_to 'Terse', 'http://terse.co.uk' %></h1><span>- a game of few words.</span>
