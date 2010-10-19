@@ -31,10 +31,7 @@ GEM
     addressable (2.2.1)
     arel (1.0.1)
       activesupport (~> 3.0.0)
-    bson (1.0.4)
-    bson_ext (1.0.7)
     builder (2.1.2)
-    crack (0.1.8)
     em-websocket (0.1.4)
       addressable (>= 2.1.1)
       eventmachine (>= 0.12.9)
@@ -42,26 +39,12 @@ GEM
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
     i18n (0.4.1)
-    json (1.4.6)
     mail (2.2.5)
       activesupport (>= 2.3.6)
       mime-types
       treetop (>= 1.4.5)
     mime-types (1.16)
-    mongo (1.0.7)
-      bson (>= 1.0.4)
-    mongoid (2.0.0.beta.17)
-      activemodel (~> 3.0.0)
-      bson (= 1.0.4)
-      mongo (= 1.0.7)
-      tzinfo (~> 0.3.22)
-      will_paginate (~> 3.0.pre)
     polyglot (0.3.1)
-    pusher (0.6.0)
-      crack
-      json
-      ruby-hmac
-      signature
     rack (1.2.1)
     rack-mount (0.6.12)
       rack (>= 1.0.0)
@@ -81,21 +64,14 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
-    ruby-hmac (0.4.0)
-    signature (0.1.1)
-      ruby-hmac
     thor (0.14.0)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
-    will_paginate (3.0.pre2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bson_ext (= 1.0.7)
   em-websocket (= 0.1.4)
-  mongoid (= 2.0.0.beta.17)
-  pusher (= 0.6.0)
   rails (= 3.0.0)
