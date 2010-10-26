@@ -56,7 +56,18 @@ Sketchpad.bindMouseControls = function(){
     if(moving){
       switch (Sketchpad.currentTool()) {
         case 'rectangle':
-          shape.attr({ width : (event.pageX-offset.left) - start_x, height : (event.pageY-offset.top) - start_y});
+          var current_x = (event.pageX-offset.left)
+          var current_y = (event.pageY-offset.top)
+          var attrs = {
+            x      : start_x,
+            y      : start_y,
+            width  : current_x - start_x,
+            height : current_y - start_y
+          }
+
+          if(current_x < start_x) { attrs.x = current_x; attrs.width = start_x - current_x }
+          if(current_y < start_y) { attrs.y = current_y; attrs.height = start_y - current_y }
+          shape.attr(attrs);
           break;
         case 'ellipse':
           shape.attr({ rx: (event.pageX-offset.left) - start_x, ry : (event.pageY-offset.top) - start_y});
