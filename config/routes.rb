@@ -1,9 +1,8 @@
 Terse::Application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users
 
   resources :games,    :only => [:show]
   resources :sketches, :only => [:create]
   resources :guesses,  :only => [:create]
 
-  match 'pusher/auth', :to => 'pushers#auth'
 end
