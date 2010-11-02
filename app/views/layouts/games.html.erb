@@ -49,7 +49,7 @@
   jQuery('#guess_form').live('submit', function() {
     var payload = {
       guess:    jQuery('#guess').val(),
-      user_id: <%= session[:user_id] %>
+      user_id: <%= current_user.id %>
     }
     web_socket.trigger('guess', payload)
     jQuery('#guess').val("");
@@ -80,10 +80,6 @@
   // 
   // channel.bind('pusher:member_removed', function(member){
   //   jQuery('#player_'+member.user_id).remove();
-  // });
-  // 
-  // channel.bind('push', function(obj){
-  //   Sketchpad.rx.draw(obj);
   // });
 
   // function addMember(member){
