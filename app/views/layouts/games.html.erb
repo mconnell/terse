@@ -7,7 +7,7 @@
 
   <script type="text/javascript">
   jQuery(document).ready(function(){
-    web_socket = new WebSocket("ws://localhost:8080/<%= params[:id] %>");
+    web_socket = new WebSocket("ws://localhost:8080/<%= current_user.id %>/<%= params[:id] %>");
 
     web_socket.trigger = function(event, data){
       var payload = JSON.stringify([event, data]);
@@ -18,6 +18,14 @@
       json = JSON.parse(evt.data);
 
       switch(json[0]){
+        // case 'playerList':
+        //   populatePlayers(json[1]);
+        //   break;
+        case 'playerConnect':
+          addPlayer(json[1]);
+          break;
+        case 'playerDisconnect':
+          removePlayer(json[1]);
         case 'guess':
           jQuery('#guesses').append(jQuery('<div>'+json[1].guess+'</div>'));
           break;
@@ -56,35 +64,20 @@
     return false;
   });
 
-  // Create a Pusher server object with your app's key
-  // var websocket = new Pusher('e3c543914a4de3990f5a');
-  // var channel = websocket.subscribe("presence-game-<%=params[:id]%>")
-
-  // Bind to server events
-  // websocket.bind('connection_established', function(evt){
-  //   jQuery.ajaxSetup({
-  //     data: { socket_id: evt.socket_id, game_id: <%=params[:id]%> }
-  //   })
-  // });
-
-  // channel.bind('pusher:subscription_succeeded', function(member_list){
+  // function populatePlayers(player_list){
   //   jQuery('#players').empty();
-  //   jQuery.each(member_list, function(i, member){
-  //     addMember(member);
+  //   jQuery.each(player_list, function(i, player){
+  //     addPlayer(player);
   //   });
-  // });
-
-  // channel.bind('pusher:member_added', function(member){
-  //   addMember(member);
-  // });
-  // 
-  // channel.bind('pusher:member_removed', function(member){
-  //   jQuery('#player_'+member.user_id).remove();
-  // });
-
-  // function addMember(member){
-  //   jQuery('#players').append(jQuery('<div class="player" id="player_'+ member.user_id +'">'+ member.user_id +'</div>'))
   // };
+
+  function addPlayer(player){
+    jQuery('#players').append(jQuery('<div class="player" id="player_'+ player.user_id +'">'+ player.user_id +'</div>'))
+  };
+
+  function removePlayer(player){
+    jQuery('#player_'+player.user_id).remove();
+  }
   </script>
 </head>
 <body>

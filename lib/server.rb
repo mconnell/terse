@@ -4,16 +4,21 @@ EventMachine.run do
   @lobbies = {}
 
   def find_or_create_lobby(lobby_id)
-    @lobbies[lobby_id] || @lobbies[lobby_id] = Lobby.new(lobby_id)
+    @lobbies[lobby_id] ||= Lobby.new(lobby_id)
   end
 
   EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8080) do |ws|
     ws.onopen do
-      lobby_id = ws.request['Path'].split('/').last
+      params   = ws.request['Path'].split('/')
+      lobby_id = params.pop
+      user_id  = params.pop
+
       lobby = find_or_create_lobby(lobby_id)
 
       socket_id = lobby.channel.subscribe { |msg| ws.send msg }
-      puts "open: channel #{lobby_id}, socket #{socket_id}"
+      lobby.channel.push ['playerConnect', { 'user_id' => user_id }].to_json
+
+      puts "open: channel #{lobby_id}, socket #{socket_id}, player #{user_id}"
 
       # Receive Message
       ws.onmessage do |msg|
@@ -35,6 +40,7 @@ EventMachine.run do
       # Closing connection
       # unsubscribe the user from the channel
       ws.onclose do
+        lobby.channel.push ['playerDisconnect', {'user_id' => user_id }].to_json
         lobby.channel.unsubscribe(socket_id)
         puts "close: lobby #{lobby_id}, socket #{socket_id}"
       end
