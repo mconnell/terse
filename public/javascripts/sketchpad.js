@@ -49,6 +49,7 @@ Sketchpad.bindMouseControls = function(){
         shape = Sketchpad.canvas.path(path);
         break;
     }
+    shape.attr({'stroke-width' : 2, 'opacity': 0.4});
     Sketchpad.history.push(shape);
   });
 
@@ -140,7 +141,7 @@ Sketchpad.rx.draw = function(obj){
       shape = Sketchpad.canvas.path(obj.paths);
       break;
   }
-
+  shape.attr({'stroke-width' : 2, 'opacity': 0.8});
   Sketchpad.history.push(shape)
   return shape
 }
