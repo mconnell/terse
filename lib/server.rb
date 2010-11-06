@@ -15,7 +15,11 @@ EventMachine.run do
 
       lobby = find_or_create_lobby(lobby_id)
 
-      socket_id = lobby.channel.subscribe { |msg| ws.send msg }
+      socket_id = lobby.channel.subscribe{|msg| ws.send msg}
+
+      ws.send ['playerList', lobby.players].to_json
+      lobby.players << { 'user_id' => user_id }
+
       lobby.channel.push ['playerConnect', { 'user_id' => user_id }].to_json
 
       puts "open: channel #{lobby_id}, socket #{socket_id}, player #{user_id}"
@@ -40,6 +44,7 @@ EventMachine.run do
       # Closing connection
       # unsubscribe the user from the channel
       ws.onclose do
+        lobby.players.delete_if {|player| player['user_id'] == user_id }
         lobby.channel.push ['playerDisconnect', {'user_id' => user_id }].to_json
         lobby.channel.unsubscribe(socket_id)
         puts "close: lobby #{lobby_id}, socket #{socket_id}"

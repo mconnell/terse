@@ -18,14 +18,15 @@
       json = JSON.parse(evt.data);
 
       switch(json[0]){
-        // case 'playerList':
-        //   populatePlayers(json[1]);
-        //   break;
+        case 'playerList':
+          populatePlayers(json[1]);
+          break;
         case 'playerConnect':
           addPlayer(json[1]);
           break;
         case 'playerDisconnect':
           removePlayer(json[1]);
+          break;
         case 'guess':
           jQuery('#guesses').append(jQuery('<div>'+json[1].guess+'</div>'));
           break;
@@ -64,12 +65,12 @@
     return false;
   });
 
-  // function populatePlayers(player_list){
-  //   jQuery('#players').empty();
-  //   jQuery.each(player_list, function(i, player){
-  //     addPlayer(player);
-  //   });
-  // };
+  function populatePlayers(player_list){
+    jQuery('#players').empty();
+    jQuery.each(player_list, function(i, player){
+      addPlayer(player);
+    });
+  };
 
   function addPlayer(player){
     jQuery('#players').append(jQuery('<div class="player" id="player_'+ player.user_id +'">'+ player.user_id +'</div>'))

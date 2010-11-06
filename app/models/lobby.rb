@@ -1,10 +1,11 @@
 class Lobby
-  attr_reader :channel, :id, :game
+  attr_reader :channel, :id, :game, :players
 
   def initialize(lobby_id)
     @channel = EM::Channel.new
     @id      = lobby_id
     @game    = Game.new
+    @players = []
     start_lobby
   end
 
