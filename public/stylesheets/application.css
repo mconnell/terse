@@ -6,6 +6,8 @@ body{
   margin: 0;
   font-size: 100%;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }
 
 header{
@@ -67,19 +69,25 @@ header h1 a{
 #sketchpad #toolbar .tool{
   width:  40px;
   height: 40px;
-  border: 1px solid #DDD;
   margin-bottom: 5px;
   font-size: 1.5em;
   text-align: center;
-  background-color: #fff;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  border: 1px solid #bbb;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
+  background: -moz-linear-gradient(top, #fff, #ddd);
 }
 
 #sketchpad #toolbar .tool:hover{
   background-color: #eee;
+  cursor: pointer;
 }
 
 #sketchpad #toolbar .tool.current{
   background-color: #eee;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#ddd));
+  background: -moz-linear-gradient(top, #ddd, #ddd);
 }
 
 #sketchpad #toolbar .tool.disabled:hover,
@@ -125,5 +133,27 @@ header h1 a{
 #submission #guess{
   width: 300px;
   padding: 2px 5px;
-  font-size: 1.0em;
+}
+
+input{
+  font-size: 0.8em;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  border: 1px solid #bbb;
+  color: #4F4F4F;
+  text-shadow: 1px 1px 1px #fff;
+}
+
+input[type='submit']{
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
+  background: -moz-linear-gradient(top, #fff, #ddd);
+}
+
+input[type='submit']:hover{
+  cursor: pointer;
+}
+
+input[type='submit']:active{
+  background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#ddd));
+  background: -moz-linear-gradient(top, #ddd, #ddd);
 }
