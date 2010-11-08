@@ -67,6 +67,7 @@ header h1 a{
 }
 
 #sketchpad #toolbar .tool{
+  position: relative;
   width:  40px;
   height: 40px;
   margin-bottom: 5px;
@@ -77,6 +78,12 @@ header h1 a{
   border: 1px solid #bbb;
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
   background: -moz-linear-gradient(top, #fff, #ddd);
+}
+
+#sketchpad #toolbar .tool img{
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }
 
 #sketchpad #toolbar .tool:hover{
